@@ -5,6 +5,7 @@ import { resetRouter } from '@/router'
 const getDefaultState = () => {
   return {
     token: getToken(),
+    id: 0,
     name: '',
     avatar: '',
     roles: []
@@ -20,6 +21,9 @@ const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
+  SET_ID: (state, id) => {
+    state.id = id
+  },
   SET_NAME: (state, name) => {
     state.name = name
   },
@@ -34,10 +38,15 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    const { username, password } = userInfo
+    const { username, password, isadmin } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
+      login({ username: username.trim(), userpassword: password, isadmin: isadmin }).then(response => {
+        const { status, message, data } = response
+        
+        if(status !== 200) {
+          reject(message)
+        }
+
         commit('SET_TOKEN', data.token)
         setToken(data.token)
         resolve()
@@ -54,18 +63,24 @@ const actions = {
         const { data } = response
 
         if (!data) {
-          reject('Verification failed, please Login again.')
+          reject('验证失败，请重新登录')
         }
 
-        const { roles, name, avatar } = data
+        if (data.isadmin === 1) data['roles'] = ['admin']
+        else data['roles'] = ['reader']
+
+        data['avatar'] = 'http://wangpeng-imgsubmit.oss-cn-hangzhou.aliyuncs.com/img/202112251517869.jpg'
+
+        const { userid, roles, username, avatar } = data
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
+          reject('getInfo: roles 必须是非空数组!')
         }
 
+        commit('SET_ID', userid)
         commit('SET_ROLES', roles)
-        commit('SET_NAME', name)
+        commit('SET_NAME', username)
         commit('SET_AVATAR', avatar)
         resolve(data)
       }).catch(error => {

@@ -1,11 +1,11 @@
 <template>
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-
+      <!-- 标题 -->
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">图书管理系统-登录界面</h3>
       </div>
-
+      <!-- 用户名 -->
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
@@ -13,14 +13,14 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="Username"
+          placeholder="请输入用户名"
           name="username"
           type="text"
           tabindex="1"
           auto-complete="on"
         />
       </el-form-item>
-
+      <!-- 密码 -->
       <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password" />
@@ -30,7 +30,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="Password"
+          placeholder="请输入密码"
           name="password"
           tabindex="2"
           auto-complete="on"
@@ -40,42 +40,49 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
-
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
+      <!-- 权限 -->
+      <el-form-item prop="authority">
+        <span class="svg-container">
+          <svg-icon icon-class="user" />
+        </span>
+        <el-select v-model="loginForm.isadmin" placeholder="请选择" style="width: 90%">
+          <el-option :key="1" label="管理员" :value="1"></el-option>
+          <el-option :key="0" label="读者" :value="0"></el-option>
+        </el-select>
+      </el-form-item>
+      
+      <!-- 登录按钮 -->
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
+      <!-- 提示 -->
+      <div>
+        <div class="tips">
+          <span style="margin-right:20px;">username: admin</span>
+          <span> password: admin</span>
+        </div>
+        <div class="tips">
+          <span style="margin-right:20px;">username: wangpeng</span>
+          <span> password: 123456</span>
+        </div>
       </div>
-
     </el-form>
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
-
 export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
-      } else {
-        callback()
-      }
+      callback()
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
-      } else {
-        callback()
-      }
+      callback()
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: 'wangpeng',
+        password: '123456',
+        isadmin: 0
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -110,9 +117,10 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
+            this.$router.push({ path: '/' })  // 无脑进首页
             this.loading = false
-          }).catch(() => {
+          }).catch((message) => {
+            this.$message.error(message)
             this.loading = false
           })
         } else {
@@ -168,6 +176,9 @@ $cursor: #fff;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
+  }
+  .el-icon-arrow-up:before {
+      content: '';
   }
 }
 </style>
