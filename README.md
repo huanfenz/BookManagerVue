@@ -1,91 +1,74 @@
-# vue-admin-template
+# 图书管理系统前端程序（Book Management System, Created by Vue）
 
-English | [简体中文](./README-zh.md)
+[![我的博客](https://img.shields.io/badge/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2-huanfenz.top-brightgreen)](http://huanfenz.top)	[![演示地址](https://img.shields.io/badge/%E6%BC%94%E7%A4%BA%E5%9C%B0%E5%9D%80-%E7%82%B9%E5%87%BB%E6%9F%A5%E7%9C%8B-blue)](https://github.com/huanfenz/BookManagerVue#演示地址)	[![联系方式](https://img.shields.io/badge/%E8%81%94%E7%B3%BB%E6%96%B9%E5%BC%8F-%E7%82%B9%E5%87%BB%E6%9F%A5%E7%9C%8B-green)](https://github.com/huanfenz/BookManagerVue#联系方式)
 
-> A minimal vue admin template with Element UI & axios & iconfont & permission control & lint
+## 项目介绍
 
-**Live demo:** http://panjiachen.github.io/vue-admin-template
+前后端分离的图书管理系统项目。
+
+后端使用Java+SpringBoot+MyBatis+MySQL
+
+前端使用Vue+Axios+Element UI
+
+项目整体难度简单，部署简单，界面友好，代码结构清晰，相比上一个项目，虽然规模缩小了，但是很多地方有了改善。适合初学者学习和练习。
+
+**注意**：这个仓库只有前端程序，对应的接口程序如下
+
+https://github.com/huanfenz/BookManager2
+
+## 环境介绍
+
+待补充
+
+## 搭建步骤
+
+### 后端程序
+
+1、数据库导入，新建数据库student_manager，将`book_manager.sql`文件导入并运行。
+
+2、打开项目，打开`src/main/resources/application.properties`，修改数据库的配置文件。
+
+3、运行项目
+
+### 前端程序
+
+1.   在项目目录下，输入命令`npm install`安装环境
+2.   输入命令`npm run dev`运行程序
+
+## 项目截图
+
+![image-20211227232703076](http://wangpeng-imgsubmit.oss-cn-hangzhou.aliyuncs.com/img/202112272327142.png)
+
+![image-20211227232606714](http://wangpeng-imgsubmit.oss-cn-hangzhou.aliyuncs.com/img/202112272326816.png)
+
+## 演示地址
+
+**滴滴滴，演示目前还是旧版用LayUI的版本。新版有空再上传服务器。**
+
+项目演示地址：http://47.97.104.230:8092/BookManager/
+
+管理员账号`admin`，密码`admin`
+
+读者账号`wangpeng`，密码`123456`
+
+>   注意：请试用时尽量不要影响到原有的记录。
+
+## 项目描述
+
+### 数据库结构
+
+![Diagram 1](http://wangpeng-imgsubmit.oss-cn-hangzhou.aliyuncs.com/img/202111211945265.jpg)
+
+## 联系方式
+
+我的博客地址：[个人博客](http://huanfenz.top)，[CSDN博客](https://blog.csdn.net/qq_34245098?spm=1000.2115.3001.5343)。欢迎大家来踩。
+
+我的联系方式，欢迎联系我：
+
+*   邮箱：`huanfenz@qq.com`
+*   QQ：`894176237`
 
 
-**The current version is `v4.0+` build on `vue-cli`. If you want to use the old version , you can switch branch to [tag/3.11.0](https://github.com/PanJiaChen/vue-admin-template/tree/tag/3.11.0), it does not rely on `vue-cli`**
-
-## Build Setup
 
 
-```bash
-# clone the project
-git clone https://github.com/PanJiaChen/vue-admin-template.git
 
-# enter the project directory
-cd vue-admin-template
-
-# install dependency
-npm install
-
-# develop
-npm run dev
-```
-
-This will automatically open http://localhost:9528
-
-## Build
-
-```bash
-# build for test environment
-npm run build:stage
-
-# build for production environment
-npm run build:prod
-```
-
-## Advanced
-
-```bash
-# preview the release environment effect
-npm run preview
-
-# preview the release environment effect + static resource analysis
-npm run preview -- --report
-
-# code format check
-npm run lint
-
-# code format check and auto fix
-npm run lint -- --fix
-```
-
-Refer to [Documentation](https://panjiachen.github.io/vue-element-admin-site/guide/essentials/deploy.html) for more information
-
-## Demo
-
-![demo](https://github.com/PanJiaChen/PanJiaChen.github.io/blob/master/images/demo.gif)
-
-## Extra
-
-If you want router permission && generate menu by user roles , you can use this branch [permission-control](https://github.com/PanJiaChen/vue-admin-template/tree/permission-control)
-
-For `typescript` version, you can use [vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template) (Credits: [@Armour](https://github.com/Armour))
-
-## Related Project
-
-- [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
-
-- [electron-vue-admin](https://github.com/PanJiaChen/electron-vue-admin)
-
-- [vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template)
-
-- [awesome-project](https://github.com/PanJiaChen/vue-element-admin/issues/2312)
-
-## Browsers support
-
-Modern browsers and Internet Explorer 10+.
-
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
-| --------- | --------- | --------- | --------- |
-| IE10, IE11, Edge| last 2 versions| last 2 versions| last 2 versions
-
-## License
-
-[MIT](https://github.com/PanJiaChen/vue-admin-template/blob/master/LICENSE) license.
-
-Copyright (c) 2017-present PanJiaChen
