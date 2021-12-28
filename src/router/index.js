@@ -38,6 +38,12 @@ export const constantRoutes = [
   },
 
   {
+    path: '/register',
+    component: () => import('@/views/register/index'),
+    hidden: true
+  },
+
+  {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
@@ -117,8 +123,7 @@ export const asyncRoutes = [
     alwaysShow: true,
     meta: {
       title: '其他管理',
-      icon: 'book',
-      roles: ['admin'] 
+      icon: 'book' 
     },
     children: [
       {
@@ -128,6 +133,18 @@ export const asyncRoutes = [
         meta: {
           title: '用户管理',
           icon: 'book',
+          roles: ['admin'],
+          noCache: true 
+        }
+      },
+      {
+        path: 'password',
+        name: 'Password',
+        component: () => import('@/views/password/index'),
+        meta: {
+          title: '修改密码',
+          icon: 'book',
+          roles: ['admin', 'reader'],
           noCache: true 
         }
       }

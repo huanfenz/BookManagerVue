@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <!-- 顶部功能 -->
-    <div class="filter-container">
+    <div class="filter-container" style="margin-bottom: 15px">
       <!-- 书名输入 -->
       <el-input v-model="queryParam.bookname" placeholder="书名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <!-- 作者输入 -->
@@ -30,21 +30,21 @@
       <el-row>
         <el-col :span="16">
           <!--普通表单-->
-          <el-form :model="form" :rules="rules" ref="ruleForm" >
+          <el-form :model="form" :rules="rules" ref="ruleForm" label-width="80px">
 
-            <el-form-item label="图书名称" :label-width="formLabelWidth" prop="bookname">
+            <el-form-item label="图书名称" prop="bookname">
               <el-input v-model="form.bookname"></el-input>
             </el-form-item>
 
-            <el-form-item label="作者" :label-width="formLabelWidth" prop="bookauthor">
+            <el-form-item label="作者" prop="bookauthor">
               <el-input v-model="form.bookauthor"></el-input>
             </el-form-item>
 
-            <el-form-item label="价格" :label-width="formLabelWidth" prop="bookprice">
+            <el-form-item label="价格" prop="bookprice">
               <el-input v-model="form.bookprice"></el-input>
             </el-form-item>
 
-            <el-form-item label="图书类型" :label-width="formLabelWidth" prop="booktypeid">
+            <el-form-item label="图书类型" prop="booktypeid">
               <el-select v-model="form.booktypeid" placeholder="请选择类型">
                 <el-option
                     v-for="item in typeData"
@@ -55,7 +55,7 @@
               </el-select>
             </el-form-item>
 
-            <el-form-item label="书籍描述" :label-width="formLabelWidth" prop="bookdesc">
+            <el-form-item label="书籍描述" prop="bookdesc">
               <el-input type="textarea" v-model="form.bookdesc"></el-input>
             </el-form-item>
           </el-form>
@@ -87,7 +87,7 @@
     <!--弹出框2-->
     <el-dialog title="选择用户" :visible.sync="dialogFormVisible2" width="400px">
       <el-form :model="form2">
-        <el-form-item label="用户名" :label-width="formLabelWidth" prop="userid">
+        <el-form-item label="用户名" prop="userid" label-width="80px">
               <el-select v-model="form2.booktypeid" placeholder="请选择用户">
                 <el-option
                     v-for="item in userData"
@@ -176,7 +176,8 @@
         :page-sizes="[5, 10, 20, 50]"
         :page-size="queryParam.limit"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="recordTotal">
+        :total="recordTotal"
+        style="margin-top: 15px">
     </el-pagination>
   </div>
 </template>
@@ -493,8 +494,6 @@ export default {
         userid: 1,
         bookid: 1
       },
-      // 表单标签宽度
-      formLabelWidth: '80px',
       rules: {
         bookname: [
           { required: true, message: '请输入图书名称', trigger: 'blur' }

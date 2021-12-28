@@ -1,9 +1,16 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+      auto-complete="on"
+      label-position="left"
+    >
       <!-- 标题 -->
       <div class="title-container">
-        <h3 class="title">图书管理系统-登录界面</h3>
+        <h3 class="title">图书管理系统-注册界面</h3>
       </div>
       <!-- 用户名 -->
       <el-form-item prop="username">
@@ -26,98 +33,83 @@
           <svg-icon icon-class="password" />
         </span>
         <el-input
-          :key="passwordType"
           ref="password"
           v-model="loginForm.password"
-          :type="passwordType"
+          type="password"
           placeholder="请输入密码"
           name="password"
           tabindex="2"
           auto-complete="on"
-          @keyup.enter.native="handleLogin"
         />
-        <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-        </span>
       </el-form-item>
-      <!-- 权限 -->
-      <el-form-item prop="authority">
+      <!-- 确认密码 -->
+      <el-form-item prop="repeat">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+          <svg-icon icon-class="password" />
         </span>
-        <el-select v-model="loginForm.isadmin" placeholder="请选择" style="width: 380px">
-          <el-option :key="1" label="管理员" :value="1"></el-option>
-          <el-option :key="0" label="读者" :value="0"></el-option>
-        </el-select>
+        <el-input
+          ref="repeat"
+          v-model="loginForm.repeat"
+          type="password"
+          placeholder="请确认密码"
+          name="repeat"
+          tabindex="3"
+          auto-complete="on"
+          @keyup.enter.native="handleRight"
+        />
       </el-form-item>
-      
-      <!-- 登录按钮 -->
-      <div style="height: 40px; margin-bottom: 30px;">
-        <el-button :loading="loading" type="primary" style="width: 48%; float: left;" @click.native.prevent="handleLogin">登录</el-button>
-        <el-button :loading="loading" type="success" style="width: 48%; float: right;" @click.native.prevent="handleRegister">注册</el-button>
-      </div>
 
-      <!-- 提示 -->
-      <div>
-        <div class="tips">
-          <span style="margin-right:20px;">username: admin</span>
-          <span> password: admin</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right:20px;">username: wangpeng</span>
-          <span> password: 123456</span>
-        </div>
+      <!-- 登录按钮 -->
+      <div style="height: 40px; margin-bottom: 30px">
+        <el-button :loading="loading" type="primary" style="width: 48%; float: left" @click.native.prevent="handleRight">确认</el-button>
+        <el-button :loading="loading" type="success" style="width: 48%; float: right" @click.native.prevent="handleBack">返回登录</el-button>
       </div>
     </el-form>
   </div>
 </template>
 
 <script>
+import { register } from '@/api/user'
+
 export default {
   name: 'Login',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      callback()
-    }
-    const validatePassword = (rule, value, callback) => {
-      callback()
+    const validateRepeat = (rule, value, callback) => {
+      if (value !== this.loginForm.password) {
+        callback(new Error('两次输入的密码不一致!'))
+      } else {
+        callback()
+      }
     }
     return {
       loginForm: {
-        username: 'wangpeng',
-        password: '123456',
-        isadmin: 0
+        username: '',
+        password: '',
+        repeat: ''
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'blur' }
+        ],
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+        repeat: [
+          { required: true, message: '请再次输入密码', trigger: 'blur' },
+          { trigger: 'blur', validator: validateRepeat }
+        ]
       },
-      loading: false,
-      passwordType: 'password',
-      redirect: undefined
+      loading: false
     }
   },
   methods: {
-    showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
-      } else {
-        this.passwordType = 'password'
-      }
-      this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
-    },
-    handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+    handleRight() {
+      this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: '/' })  // 无脑进首页
-            this.loading = false
-          }).catch((message) => {
-            this.$message.error(message)
-            this.loading = false
+          register({ username: this.loginForm.username, password: this.loginForm.password}).then((res) => {
+            if (res === 0) {
+              this.$message.error('注册失败，可能账号重复了')
+            } else {
+              this.$message.success('注册成功')
+            }
           })
         } else {
           console.log('不允许提交!')
@@ -125,9 +117,8 @@ export default {
         }
       })
     },
-    handleRegister() {
-      console.log("注册按钮")
-      this.$router.push({ path: '/register' })  // 进注册页面
+    handleBack() {
+      this.$router.push('/login')
     }
   }
 }
@@ -137,8 +128,8 @@ export default {
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
-$bg:#283443;
-$light_gray:#fff;
+$bg: #283443;
+$light_gray: #fff;
 $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
@@ -178,15 +169,15 @@ $cursor: #fff;
     color: #454545;
   }
   .el-icon-arrow-up:before {
-      content: '';
+    content: "";
   }
 }
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
-$dark_gray:#889aa4;
-$light_gray:#eee;
+$bg: #2d3a4b;
+$dark_gray: #889aa4;
+$light_gray: #eee;
 
 .login-container {
   min-height: 100%;
@@ -244,6 +235,5 @@ $light_gray:#eee;
     cursor: pointer;
     user-select: none;
   }
-
 }
 </style>

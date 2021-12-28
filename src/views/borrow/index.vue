@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <!-- 顶部功能 -->
-    <div class="filter-container">
+    <div class="filter-container" style="margin-bottom: 15px">
       <!-- 用户名输入 -->
       <el-input v-permission="['admin']" v-model="queryParam.username" placeholder="用户名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <!-- 图书名输入 -->
@@ -76,7 +76,8 @@
         :page-sizes="[5, 10, 20, 50]"
         :page-size="queryParam.limit"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="recordTotal">
+        :total="recordTotal"
+        style="margin-top: 15px">
     </el-pagination>
   </div>
 </template>

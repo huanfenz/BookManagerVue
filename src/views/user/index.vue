@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <!-- 顶部功能 -->
-    <div class="filter-container">
+    <div class="filter-container" style="margin-bottom: 15px">
       <!-- 用户名输入 -->
       <el-input v-model="queryParam.username" placeholder="用户名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <!-- 一些按钮 -->
@@ -22,18 +22,18 @@
     <!--弹出框-->
     <el-dialog :title="formTitle" :visible.sync="dialogFormVisible" width="30%">
       <!--普通表单-->
-      <el-form :model="form" :rules="rules" ref="ruleForm" >
+      <el-form :model="form" :rules="rules" ref="ruleForm" label-width="80px">
 
-        <el-form-item label="用户名称" :label-width="formLabelWidth" prop="username">
+        <el-form-item label="用户名称" prop="username">
           <el-input v-model="form.username"></el-input>
         </el-form-item>
 
-        <el-form-item label="用户密码" :label-width="formLabelWidth" prop="userpassword">
+        <el-form-item label="用户密码" prop="userpassword">
           <el-input v-model="form.userpassword"></el-input>
         </el-form-item>
 
-        <el-form-item label="书籍状态" :label-width="formLabelWidth" prop="isadmin">
-          <el-radio v-model="form.isadmin" :label="1">管理员</el-radio></el-radio>
+        <el-form-item label="书籍状态" prop="isadmin">
+          <el-radio v-model="form.isadmin" :label="1">管理员</el-radio>
           <el-radio v-model="form.isadmin" :label="0">读者</el-radio>
         </el-form-item>
       </el-form>
@@ -96,7 +96,8 @@
         :page-sizes="[5, 10, 20, 50]"
         :page-size="queryParam.limit"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="recordTotal">
+        :total="recordTotal"
+        style="margin-top: 15px">
     </el-pagination>
   </div>
 </template>
@@ -297,8 +298,6 @@ export default {
         userpassword: '',
         isadmin: 1
       },
-      // 表单标签宽度
-      formLabelWidth: '80px',
       rules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' }

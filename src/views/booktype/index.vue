@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <!-- 顶部功能 -->
-    <div class="filter-container">
+    <div class="filter-container" style="margin-bottom: 15px">
       <!-- 类型名输入 -->
       <el-input v-model="queryParam.booktypename" placeholder="类型名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <!-- 一些按钮 -->
@@ -22,13 +22,13 @@
     <!--弹出框-->
     <el-dialog :title="formTitle" :visible.sync="dialogFormVisible" width="30%">
       <!--普通表单-->
-      <el-form :model="form" :rules="rules" ref="ruleForm" >
+      <el-form :model="form" :rules="rules" ref="ruleForm" label-width="80px">
 
-        <el-form-item label="类型名称" :label-width="formLabelWidth" prop="booktypename">
+        <el-form-item label="类型名称" prop="booktypename">
           <el-input v-model="form.booktypename"></el-input>
         </el-form-item>
 
-        <el-form-item label="类型描述" :label-width="formLabelWidth" prop="booktypedesc">
+        <el-form-item label="类型描述" prop="booktypedesc">
           <el-input type="textarea" v-model="form.booktypedesc"></el-input>
         </el-form-item>
       </el-form>
@@ -86,7 +86,8 @@
         :page-sizes="[5, 10, 20, 50]"
         :page-size="queryParam.limit"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="recordTotal">
+        :total="recordTotal"
+        style="margin-top: 15px">
     </el-pagination>
   </div>
 </template>
@@ -284,8 +285,6 @@ export default {
         booktypename: '',
         booktypedesc: ''
       },
-      // 表单标签宽度
-      formLabelWidth: '80px',
       rules: {
         booktypename: [
           { required: true, message: '请输入图书类型名称', trigger: 'blur' }
