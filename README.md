@@ -22,14 +22,6 @@ https://github.com/huanfenz/BookManager2
 
 ## 搭建步骤
 
-### 后端程序
-
-1、数据库导入，新建数据库student_manager，将`book_manager.sql`文件导入并运行。
-
-2、打开项目，打开`src/main/resources/application.properties`，修改数据库的配置文件。
-
-3、运行项目
-
 ### 前端程序
 
 1.   在项目目录下，输入命令`npm install`安装环境
@@ -43,15 +35,13 @@ https://github.com/huanfenz/BookManager2
 
 ## 演示地址
 
-**滴滴滴，演示目前还是旧版用LayUI的版本。新版有空再上传服务器。**
-
 项目演示地址：http://47.97.104.230:8092/BookManager/
 
 管理员账号`admin`，密码`admin`
 
 读者账号`wangpeng`，密码`123456`
 
->   注意：请试用时尽量不要影响到原有的记录。
+**注意：请试用时尽量不要影响到原有的记录。**
 
 ## 项目描述
 
