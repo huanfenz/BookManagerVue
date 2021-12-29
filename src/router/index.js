@@ -85,7 +85,7 @@ export const asyncRoutes = [
         component: () => import('@/views/bookinfo/index'),
         meta: {
           title: '图书信息管理',
-          icon: 'book',
+          icon: 'form',
           roles: ['admin', 'reader'],
           noCache: true 
         }
@@ -96,7 +96,7 @@ export const asyncRoutes = [
         component: () => import('@/views/booktype/index'),
         meta: {
           title: '图书类型管理',
-          icon: 'book',
+          icon: 'example',
           roles: ['admin'],
           noCache: true 
         }
@@ -107,7 +107,7 @@ export const asyncRoutes = [
         component: () => import('@/views/borrow/index'),
         meta: {
           title: '借阅信息管理',
-          icon: 'book',
+          icon: 'borrow',
           roles: ['admin', 'reader'],
           noCache: true 
         }
@@ -123,7 +123,7 @@ export const asyncRoutes = [
     alwaysShow: true,
     meta: {
       title: '其他管理',
-      icon: 'book' 
+      icon: 'other' 
     },
     children: [
       {
@@ -132,7 +132,7 @@ export const asyncRoutes = [
         component: () => import('@/views/user/index'),
         meta: {
           title: '用户管理',
-          icon: 'book',
+          icon: 'user',
           roles: ['admin'],
           noCache: true 
         }
@@ -143,7 +143,7 @@ export const asyncRoutes = [
         component: () => import('@/views/password/index'),
         meta: {
           title: '修改密码',
-          icon: 'book',
+          icon: 'password',
           roles: ['admin', 'reader'],
           noCache: true 
         }

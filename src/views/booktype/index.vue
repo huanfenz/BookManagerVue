@@ -14,7 +14,7 @@
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
         添加类型
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="danger" icon="el-icon-edit" @click="handleDeleteSome">
+      <el-button class="filter-item" style="margin-left: 10px;" type="danger" icon="el-icon-delete" @click="handleDeleteSome">
         批量删除
       </el-button>
     </div>
@@ -113,8 +113,9 @@ export default {
   methods: {
     // 分页大小改变监听
     handleSizeChange(curSize) {
-      this.queryParam.size = curSize
-      queryBookTypesByPage(this.queryParam).then(res => {
+      const params = this.queryParam
+      params.limit = curSize
+      queryBookTypesByPage(params).then(res => {
             console.log('分页数据获取成功',res)
             this.tableData = res.data
             this.recordTotal = res.count
@@ -123,8 +124,9 @@ export default {
 
     // 点击分页监听方法
     handleCurrentChange(curPage) {
-      this.queryParam.page = curPage
-      queryBookTypesByPage(this.queryParam).then(res => {
+      const params = this.queryParam
+      params.page = curPage
+      queryBookTypesByPage(params).then(res => {
             console.log('分页数据获取成功',res)
             this.tableData = res.data
             this.recordTotal = res.count

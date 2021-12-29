@@ -11,6 +11,7 @@
           <svg-icon icon-class="user" />
         </span>
         <el-input
+          class="yuan"
           ref="username"
           v-model="loginForm.username"
           placeholder="请输入用户名"
@@ -26,6 +27,7 @@
           <svg-icon icon-class="password" />
         </span>
         <el-input
+          class="yuan"
           :key="passwordType"
           ref="password"
           v-model="loginForm.password"
@@ -45,7 +47,7 @@
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
-        <el-select v-model="loginForm.isadmin" placeholder="请选择" style="width: 380px">
+        <el-select v-model="loginForm.isadmin" placeholder="请选择" style="width: 418px">
           <el-option :key="1" label="管理员" :value="1"></el-option>
           <el-option :key="0" label="读者" :value="0"></el-option>
         </el-select>
@@ -60,11 +62,11 @@
       <!-- 提示 -->
       <div>
         <div class="tips">
-          <span style="margin-right:20px;">username: admin</span>
+          <span style="margin-right:20px;">管理员 username: admin</span>
           <span> password: admin</span>
         </div>
         <div class="tips">
-          <span style="margin-right:20px;">username: wangpeng</span>
+          <span style="margin-right:20px;">读者 username: wangpeng</span>
           <span> password: 123456</span>
         </div>
       </div>
@@ -84,9 +86,9 @@ export default {
     }
     return {
       loginForm: {
-        username: 'wangpeng',
-        password: '123456',
-        isadmin: 0
+        username: 'admin',
+        password: 'admin',
+        isadmin: 1
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -149,10 +151,32 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
-  .el-input {
+  .el-input.yuan {
     display: inline-block;
     height: 47px;
     width: 85%;
+
+    input {
+      background: transparent;
+      border: 0px;
+      -webkit-appearance: none;
+      border-radius: 0px;
+      padding: 12px 5px 12px 15px;
+      color: $light_gray;
+      height: 47px;
+      caret-color: $cursor;
+
+      &:-webkit-autofill {
+        box-shadow: 0 0 0px 1000px $bg inset !important;
+        -webkit-text-fill-color: $cursor !important;
+      }
+    }
+  }
+
+  .el-input {
+    display: inline-block;
+    height: 47px;
+    width: 100%;
 
     input {
       background: transparent;
@@ -176,9 +200,6 @@ $cursor: #fff;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
-  }
-  .el-icon-arrow-up:before {
-      content: '';
   }
 }
 </style>

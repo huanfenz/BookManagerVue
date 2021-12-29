@@ -13,7 +13,7 @@
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleShowAll">
         显示全部
       </el-button>
-      <el-button v-permission="['admin']" class="filter-item" style="margin-left: 10px;" type="danger" icon="el-icon-edit" @click="handleDeleteSome">
+      <el-button v-permission="['admin']" class="filter-item" style="margin-left: 10px;" type="danger" icon="el-icon-delete" @click="handleDeleteSome">
         批量删除
       </el-button>
       <!-- <el-button class="filter-item" style="margin-left: 10px;" type="success" icon="el-icon-edit" @click="handleReturnSome">
@@ -53,8 +53,11 @@
           label="借书时间">
       </el-table-column>
       <el-table-column
-          prop="returntimestr"
           label="还书时间">
+          <template slot-scope="scope">
+            <span v-if="scope.row.returntimestr === null || scope.row.returntimestr === ''" style="color: red">等待还书</span>
+            <span v-else style="color: #1aac1a">{{scope.row.returntimestr}}</span>
+          </template>
       </el-table-column>
       <el-table-column
           fixed="right"
@@ -103,8 +106,9 @@ export default {
   methods: {
     // 分页大小改变监听
     handleSizeChange(curSize) {
-      this.queryParam.size = curSize
-      queryBorrowsByPage(this.queryParam).then(res => {
+      const params = this.queryParam
+      params.limit = curSize
+      queryBorrowsByPage(params).then(res => {
             console.log('分页数据获取成功',res)
             this.tableData = res.data
             this.recordTotal = res.count
@@ -113,8 +117,9 @@ export default {
 
     // 点击分页监听方法
     handleCurrentChange(curPage) {
-      this.queryParam.page = curPage
-      queryBorrowsByPage(this.queryParam).then(res => {
+      const params = this.queryParam
+      params.page = curPage
+      queryBorrowsByPage(params).then(res => {
             console.log('分页数据获取成功',res)
             this.tableData = res.data
             this.recordTotal = res.count
@@ -257,15 +262,6 @@ export default {
     }
   },
   watch: {
-    tableData: {
-      deep: true,
-      handler() {
-        // 遍历每个数组，如果returmtimestr为空则给它加上提示
-        this.tableData.forEach(item => {
-          if(item.returntimestr == null) item.returntimestr = '等待还书'
-        })
-      }
-    },
     'queryParam.userid': {
       immediate: true,
       handler() {

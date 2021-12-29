@@ -14,7 +14,7 @@
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
         添加用户
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="danger" icon="el-icon-edit" @click="handleDeleteSome">
+      <el-button class="filter-item" style="margin-left: 10px;" type="danger" icon="el-icon-delete" @click="handleDeleteSome">
         批量删除
       </el-button>
     </div>
@@ -32,7 +32,7 @@
           <el-input v-model="form.userpassword"></el-input>
         </el-form-item>
 
-        <el-form-item label="书籍状态" prop="isadmin">
+        <el-form-item label="身份" prop="isadmin">
           <el-radio v-model="form.isadmin" :label="1">管理员</el-radio>
           <el-radio v-model="form.isadmin" :label="0">读者</el-radio>
         </el-form-item>
@@ -72,9 +72,12 @@
           show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-          prop="identity"
           label="用户身份"
           show-overflow-tooltip>
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.isadmin === 1" type="warning">管理员</el-tag>
+            <el-tag v-else type="success">读者</el-tag>
+          </template>
       </el-table-column>
       <el-table-column
           fixed="right"
@@ -123,8 +126,9 @@ export default {
   methods: {
     // 分页大小改变监听
     handleSizeChange(curSize) {
-      this.queryParam.size = curSize
-      queryUsersByPage(this.queryParam).then(res => {
+      const params = this.queryParam
+      params.limit = curSize
+      queryUsersByPage(params).then(res => {
             console.log('分页数据获取成功',res)
             this.tableData = res.data
             this.recordTotal = res.count
@@ -133,8 +137,9 @@ export default {
 
     // 点击分页监听方法
     handleCurrentChange(curPage) {
-      this.queryParam.page = curPage
-      queryUsersByPage(this.queryParam).then(res => {
+      const params = this.queryParam
+      params.page = curPage
+      queryUsersByPage(params).then(res => {
             console.log('分页数据获取成功',res)
             this.tableData = res.data
             this.recordTotal = res.count
@@ -314,17 +319,6 @@ export default {
     // 通过表单类型计算表单标题
     formTitle() {
       return this.formType === 0 ? '添加记录' : '修改记录'
-    }
-  },
-  watch: {
-    tableData: {
-      deep: true,
-      handler() {
-        // 遍历每个数组，添加identity
-        this.tableData.forEach(item => {
-          item['identity'] = item.isadmin === 1 ? '管理员' : '读者'
-        })
-      }
     }
   }
 }

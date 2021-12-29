@@ -20,7 +20,7 @@
       <el-button v-permission="['admin']" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
         添加图书
       </el-button>
-      <el-button v-permission="['admin']" class="filter-item" style="margin-left: 10px;" type="danger" icon="el-icon-edit" @click="handleDeleteSome">
+      <el-button v-permission="['admin']" class="filter-item" style="margin-left: 10px;" type="danger" icon="el-icon-delete" @click="handleDeleteSome">
         批量删除
       </el-button>
     </div>
@@ -122,6 +122,14 @@
           width="100">
       </el-table-column>
       <el-table-column
+          v-if="roleIsAdmin === false"
+          label="图书封面"
+          width="155">
+          <template slot-scope="scope">
+            <el-image :src="scope.row.bookimg" style="width: 130px; height: 180px"></el-image>
+          </template>
+      </el-table-column>
+      <el-table-column
           prop="bookname"
           label="图书名称"
           width="150"
@@ -151,9 +159,12 @@
           show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-          prop="status"
           label="图书状态"
           width="100">
+          <template slot-scope="scope">
+            <span v-if="scope.row.isborrowed === 1" style="color: red">已借出</span>
+            <span v-else style="color: #1aac1a">未借出</span>
+          </template>
       </el-table-column>
       <el-table-column
           fixed="right"
@@ -215,11 +226,18 @@ export default {
       this.typeData = res
     })
   },
+  mounted() {
+    if (this.roleIsAdmin === false) {
+      this.queryParam.limit = 5
+      this.handleSizeChange(this.queryParam.limit)
+    }
+  },
   methods: {
     // 分页大小改变监听
     handleSizeChange(curSize) {
-      this.queryParam.size = curSize
-      queryBookInfosByPage(this.queryParam).then(res => {
+      const params = this.queryParam
+      params.limit = curSize
+      queryBookInfosByPage(params).then(res => {
             console.log('分页数据获取成功',res)
             this.tableData = res.data
             this.recordTotal = res.count
@@ -228,8 +246,9 @@ export default {
 
     // 点击分页监听方法
     handleCurrentChange(curPage) {
-      this.queryParam.page = curPage
-      queryBookInfosByPage(this.queryParam).then(res => {
+      const params = this.queryParam
+      params.page = curPage
+      queryBookInfosByPage(params).then(res => {
             console.log('分页数据获取成功',res)
             this.tableData = res.data
             this.recordTotal = res.count
@@ -526,17 +545,6 @@ export default {
     roleIsAdmin() {
       if(this.roles[0] === 'admin') return true
       else return false
-    }
-  },
-  watch: {
-    tableData: {
-      deep: true,
-      handler() {
-        // 遍历每个数组，给它填上staus属性
-        this.tableData.forEach(item => {
-          item['status'] = item.isborrowed === 0 ? '未借出' : '已借出'
-        })
-      }
     }
   }
 }
