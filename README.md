@@ -56,7 +56,6 @@ https://github.com/huanfenz/BookManager2
 我的联系方式，欢迎联系我：
 
 *   邮箱：`huanfenz@qq.com`
-*   QQ：`894176237`
 
 
 
