@@ -16,46 +16,7 @@
 
 https://github.com/huanfenz/BookManager2
 
-## 环境介绍
 
-待补充
-
-## 搭建步骤
-
-### 前端程序
-
-1.   在项目目录下，输入命令`npm install`安装环境
-2.   输入命令`npm run dev`运行程序
-
-## 项目截图
-
-![image-20211227232703076](http://wangpeng-imgsubmit.oss-cn-hangzhou.aliyuncs.com/img/202112272327142.png)
-
-![image-20211227232606714](http://wangpeng-imgsubmit.oss-cn-hangzhou.aliyuncs.com/img/202112272326816.png)
-
-## 演示地址
-
-项目演示地址：http://47.97.104.230:8092/BookManager/
-
-管理员账号`admin`，密码`admin`
-
-读者账号`wangpeng`，密码`123456`
-
-**注意：请试用时尽量不要影响到原有的记录。**
-
-## 项目描述
-
-### 数据库结构
-
-![Diagram 1](http://wangpeng-imgsubmit.oss-cn-hangzhou.aliyuncs.com/img/202111211945265.jpg)
-
-## 联系方式
-
-我的博客地址：[个人博客](http://huanfenz.top)，[CSDN博客](https://blog.csdn.net/qq_34245098?spm=1000.2115.3001.5343)。欢迎大家来踩。
-
-我的联系方式，欢迎联系我：
-
-*   邮箱：`huanfenz@qq.com`
 
 
 
